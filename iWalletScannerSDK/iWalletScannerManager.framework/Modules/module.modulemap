@@ -1,0 +1,11 @@
+framework module iWalletScannerManager {
+  umbrella header "iWalletScannerManager.h"
+
+  export *
+  module * { export * }
+}
+
+module iWalletScannerManager.Swift {
+    header "iWalletScannerManager-Swift.h"
+    requires objc
+}

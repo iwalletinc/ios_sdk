@@ -1,0 +1,11 @@
+framework module IWalletApi {
+  umbrella header "IWalletApi.h"
+
+  export *
+  module * { export * }
+}
+
+module IWalletApi.Swift {
+    header "IWalletApi-Swift.h"
+    requires objc
+}

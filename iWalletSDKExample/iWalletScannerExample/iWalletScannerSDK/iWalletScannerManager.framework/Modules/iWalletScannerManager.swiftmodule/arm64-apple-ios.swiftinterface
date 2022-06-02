@@ -1,0 +1,198 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target arm64-apple-ios12.4 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name iWalletScannerManager
+import AVFoundation
+import CoreImage
+import CoreLocation
+import CoreMotion
+import ImageIO
+import MobileCoreServices
+import Photos
+import PhotosUI
+import Swift
+import UIKit
+import _Concurrency
+@_exported import iWalletScannerManager
+public enum CameraState {
+  case ready, accessDenied, noDeviceFound, notDetermined
+  public static func == (a: iWalletScannerManager.CameraState, b: iWalletScannerManager.CameraState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum CameraDevice {
+  case front, back
+  public static func == (a: iWalletScannerManager.CameraDevice, b: iWalletScannerManager.CameraDevice) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum CameraFlashMode : Swift.Int {
+  case off, on, auto
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum CameraOutputMode {
+  case stillImage, videoWithMic, videoOnly
+  public static func == (a: iWalletScannerManager.CameraOutputMode, b: iWalletScannerManager.CameraOutputMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum CaptureResult {
+  case success(content: iWalletScannerManager.CaptureContent)
+  case failure(Swift.Error)
+}
+public enum CaptureContent {
+  case imageData(Foundation.Data)
+  case image(UIKit.UIImage)
+  case asset(Photos.PHAsset)
+}
+extension iWalletScannerManager.CaptureContent {
+  public var asImage: UIKit.UIImage? {
+    get
+  }
+  public var asData: Foundation.Data? {
+    get
+  }
+}
+public enum CaptureError : Swift.Error {
+  case noImageData
+  case invalidImageData
+  case noVideoConnection
+  case noSampleBuffer
+  case assetNotSaved
+  public static func == (a: iWalletScannerManager.CaptureError, b: iWalletScannerManager.CaptureError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class CameraManager : ObjectiveC.NSObject, AVFoundation.AVCaptureFileOutputRecordingDelegate, UIKit.UIGestureRecognizerDelegate {
+  @_Concurrency.MainActor(unsafe) open var imageAlbumName: Swift.String?
+  @_Concurrency.MainActor(unsafe) open var videoAlbumName: Swift.String?
+  @_Concurrency.MainActor(unsafe) open var captureSession: AVFoundation.AVCaptureSession?
+  @_Concurrency.MainActor(unsafe) open var showErrorsToUsers: Swift.Bool
+  @_Concurrency.MainActor(unsafe) open var showAccessPermissionPopupAutomatically: Swift.Bool
+  @_Concurrency.MainActor(unsafe) open var showErrorBlock: (_ erTitle: Swift.String, _ erMessage: Swift.String) -> Swift.Void
+  @_Concurrency.MainActor(unsafe) open func canSetPreset(preset: AVFoundation.AVCaptureSession.Preset) -> Swift.Bool?
+  @_Concurrency.MainActor(unsafe) open var writeFilesToPhoneLibrary: Swift.Bool
+  @_Concurrency.MainActor(unsafe) open var shouldRespondToOrientationChanges: Swift.Bool {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) open var shouldFlipFrontCameraImage: Swift.Bool
+  @_Concurrency.MainActor(unsafe) open var shouldKeepViewAtOrientationChanges: Swift.Bool
+  @_Concurrency.MainActor(unsafe) open var shouldEnableTapToFocus: Swift.Bool {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) open var shouldEnablePinchToZoom: Swift.Bool {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) open var shouldEnableExposure: Swift.Bool {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) open var cameraIsReady: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) open var hasFrontCamera: Swift.Bool
+  @_Concurrency.MainActor(unsafe) open var hasFlash: Swift.Bool
+  @_Concurrency.MainActor(unsafe) open var animateCameraDeviceChange: Swift.Bool
+  @_Concurrency.MainActor(unsafe) open var animateShutter: Swift.Bool
+  @_Concurrency.MainActor(unsafe) open var shouldUseLocationServices: Swift.Bool {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) open var cameraDevice: iWalletScannerManager.CameraDevice {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) open var flashMode: iWalletScannerManager.CameraFlashMode {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) open var cameraOutputQuality: AVFoundation.AVCaptureSession.Preset {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) open var cameraOutputMode: iWalletScannerManager.CameraOutputMode {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) open var recordedDuration: CoreMedia.CMTime {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) open var recordedFileSize: Swift.Int64 {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) open var focusMode: AVFoundation.AVCaptureDevice.FocusMode
+  @_Concurrency.MainActor(unsafe) open var exposureMode: AVFoundation.AVCaptureDevice.ExposureMode
+  @_Concurrency.MainActor(unsafe) open var videoStabilisationMode: AVFoundation.AVCaptureVideoStabilizationMode {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) open var activeVideoStabilisationMode: AVFoundation.AVCaptureVideoStabilizationMode {
+    get
+  }
+  @discardableResult
+  @_Concurrency.MainActor(unsafe) open func addPreviewLayerToView(_ view: UIKit.UIView) -> iWalletScannerManager.CameraState
+  @discardableResult
+  @_Concurrency.MainActor(unsafe) open func addPreviewLayerToView(_ view: UIKit.UIView, newCameraOutputMode: iWalletScannerManager.CameraOutputMode) -> iWalletScannerManager.CameraState
+  @discardableResult
+  @_Concurrency.MainActor(unsafe) open func addLayerPreviewToView(_ view: UIKit.UIView, newCameraOutputMode: iWalletScannerManager.CameraOutputMode, completion: (() -> Swift.Void)?) -> iWalletScannerManager.CameraState
+  @_Concurrency.MainActor(unsafe) open func zoom(_ scale: CoreGraphics.CGFloat)
+  @_Concurrency.MainActor(unsafe) open func askUserForCameraPermission(_ completion: @escaping (Swift.Bool) -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) open func stopCaptureSession()
+  @_Concurrency.MainActor(unsafe) open func resumeCaptureSession()
+  @_Concurrency.MainActor(unsafe) open func stopAndRemoveCaptureSession()
+  @available(*, deprecated)
+  @_Concurrency.MainActor(unsafe) open func capturePictureWithCompletion(_ imageCompletion: @escaping (UIKit.UIImage?, Foundation.NSError?) -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) open func capturePictureWithCompletion(_ imageCompletion: @escaping (iWalletScannerManager.CaptureResult) -> Swift.Void)
+  @available(*, deprecated)
+  @_Concurrency.MainActor(unsafe) open func capturePictureDataWithCompletion(_ imageCompletion: @escaping (Foundation.Data?, Foundation.NSError?) -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) open func capturePictureDataWithCompletion(_ imageCompletion: @escaping (iWalletScannerManager.CaptureResult) -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) open func startRecordingVideo()
+  @_Concurrency.MainActor(unsafe) open func stopVideoRecording(_ completion: ((_ videoURL: Foundation.URL?, _ error: Foundation.NSError?) -> Swift.Void)?)
+  public typealias QRCodeDetectionHandler = (Swift.Result<Swift.String, Swift.Error>) -> Swift.Void
+  @_Concurrency.MainActor(unsafe) open func startQRCodeDetection(_ handler: @escaping iWalletScannerManager.CameraManager.QRCodeDetectionHandler)
+  @_Concurrency.MainActor(unsafe) open func stopQRCodeDetection()
+  @_Concurrency.MainActor(unsafe) open func deviceOrientationMatchesInterfaceOrientation() -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) open func currentCameraStatus() -> iWalletScannerManager.CameraState
+  @_Concurrency.MainActor(unsafe) open func changeFlashMode() -> iWalletScannerManager.CameraFlashMode
+  @_Concurrency.MainActor(unsafe) open func hasFlash(for cameraDevice: iWalletScannerManager.CameraDevice) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc public func fileOutput(_: AVFoundation.AVCaptureFileOutput, didStartRecordingTo _: Foundation.URL, from _: [AVFoundation.AVCaptureConnection])
+  @_Concurrency.MainActor(unsafe) @objc open func fileOutput(_: AVFoundation.AVCaptureFileOutput, didFinishRecordingTo outputFileURL: Foundation.URL, from _: [AVFoundation.AVCaptureConnection], error: Swift.Error?)
+  @_Concurrency.MainActor(unsafe) @objc open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) open func resetOrientation()
+  @_Concurrency.MainActor(unsafe) open func _doFlipAnimation()
+  @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class CameraLocationManager : ObjectiveC.NSObject, CoreLocation.CLLocationManagerDelegate {
+    @objc public func locationManager(_: CoreLocation.CLLocationManager, didUpdateLocations locations: [CoreLocation.CLLocation])
+    @objc public func locationManager(_: CoreLocation.CLLocationManager, didChangeAuthorization status: CoreLocation.CLAuthorizationStatus)
+    @objc deinit
+  }
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension iWalletScannerManager.CameraManager : AVFoundation.AVCaptureMetadataOutputObjectsDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func metadataOutput(_: AVFoundation.AVCaptureMetadataOutput, didOutput metadataObjects: [AVFoundation.AVMetadataObject], from _: AVFoundation.AVCaptureConnection)
+}
+extension iWalletScannerManager.CameraState : Swift.Equatable {}
+extension iWalletScannerManager.CameraState : Swift.Hashable {}
+extension iWalletScannerManager.CameraDevice : Swift.Equatable {}
+extension iWalletScannerManager.CameraDevice : Swift.Hashable {}
+extension iWalletScannerManager.CameraFlashMode : Swift.Equatable {}
+extension iWalletScannerManager.CameraFlashMode : Swift.Hashable {}
+extension iWalletScannerManager.CameraFlashMode : Swift.RawRepresentable {}
+extension iWalletScannerManager.CameraOutputMode : Swift.Equatable {}
+extension iWalletScannerManager.CameraOutputMode : Swift.Hashable {}
+extension iWalletScannerManager.CaptureError : Swift.Equatable {}
+extension iWalletScannerManager.CaptureError : Swift.Hashable {}

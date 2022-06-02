@@ -1,0 +1,29 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target arm64-apple-ios15.5 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name IWalletApi
+import Foundation
+@_exported import IWalletApi
+import Swift
+import _Concurrency
+@_hasMissingDesignatedInitializers public class iWalletScannerAPiManager {
+  public static let shared: IWalletApi.iWalletScannerAPiManager
+  public struct iWalletImageData : Swift.Codable {
+    public var gid: Swift.String
+    public var message: Swift.String
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public func getPaymentIntentEndPoint(phone: Swift.String, amount: Swift.Double, checkImage: Swift.String, note: Swift.String, access: Swift.String, completion: @escaping (Swift.Result<IWalletApi.iWalletScannerAPiManager.iWalletImageData, Swift.Error>) -> Swift.Void)
+  @objc deinit
+}
+public enum iWalletError : Swift.Error {
+  case error(Swift.String)
+  case failedToParseUrl
+  case invalidResponse
+  case noRefreshToken
+}
+extension IWalletApi.iWalletError : Foundation.LocalizedError {
+  public var description: Swift.String? {
+    get
+  }
+}
